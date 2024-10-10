@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
+        let settingsViewModel = SettingsViewModel()
+        
         TabView {
             Tab("Accueil", systemImage: "stopwatch") {
                 WorkoutView()
@@ -20,6 +22,7 @@ struct ContentView: View {
             
             Tab("Paramètres", systemImage: "gear") {
                 SettingsView()
+                    .environmentObject(settingsViewModel)
             }
         }
     }

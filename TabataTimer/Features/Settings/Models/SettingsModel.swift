@@ -9,14 +9,14 @@ import Foundation
 
 struct SettingsModel:  Codable, Identifiable {
     var id: UUID = UUID()
-    var soundLevel: Int = 0
+    var soundLevel: Float = 0
     var enabledSound: Bool = false
     var enabledVibration: Bool = false
     var timeFormat: TimeFormat = .mmss
 }
 
 enum TimeFormat: String, Codable, CaseIterable {
-    case s = "s"
-    case mmss = "MMss"
-    case hhmmss = "HHMMSS"
+    case s = "Secondes"
+    case mmss = "Minutes / Secondes"
+    case hhmmss = "Heures / minutes / secondes"
 }
