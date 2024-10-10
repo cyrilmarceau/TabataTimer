@@ -10,15 +10,15 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            Tab("Accueil", systemImage: "stopwatch"){
+            Tab("Accueil", systemImage: "stopwatch") {
                 WorkoutView()
             }
             
-            Tab("Historique", systemImage: "info.circle"){
+            Tab("Historique", systemImage: "info.circle") {
                 WorkoutHistoryView()
             }
             
-            Tab("Paramètre", systemImage: "gear"){
+            Tab("Paramètres", systemImage: "gear") {
                 SettingsView()
             }
         }
