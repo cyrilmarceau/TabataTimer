@@ -10,10 +10,12 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         let settingsViewModel = SettingsViewModel()
+        let workoutViewModel = WorkoutViewModel()
         
         TabView {
             Tab("Accueil", systemImage: "stopwatch") {
                 WorkoutView()
+                    .environmentObject(workoutViewModel)
             }
             
             Tab("Historique", systemImage: "info.circle") {

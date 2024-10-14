@@ -11,7 +11,6 @@ struct SettingsView: View {
     @EnvironmentObject var vm: SettingsViewModel
     
     var body: some View {
-        
         NavigationStack {
             Form {
                 Section(header: Text("Son")) {
