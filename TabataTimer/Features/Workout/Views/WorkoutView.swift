@@ -51,6 +51,7 @@ struct WorkoutView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
+                
                 HStack(spacing: 10) {
                     WorkoutCard(
                         title: "Démarrage",
@@ -59,12 +60,26 @@ struct WorkoutView: View {
                     )
                     
                     WorkoutCard(
+                        title: "Pause",
+                        value: "01:30",
+                        color: Color.brown.opacity(0.5)
+                    )
+                }.padding(.horizontal)
+                
+                HStack(spacing: 10) {
+                    WorkoutCard(
                         title: "Exercice",
                         value: "00:30",
                         color: Color.yellow.opacity(0.5)
                     )
+                    
+                    WorkoutCard(
+                        title: "Pause",
+                        value: "00:15",
+                        color: Color.yellow.opacity(0.5)
+                    )
                 }.padding(.horizontal)
-                
+
                 HStack(spacing: 10) {
                     WorkoutCard(
                         title: "Rounds",
@@ -75,7 +90,7 @@ struct WorkoutView: View {
                     WorkoutCard(
                         title: "Cycles",
                         value: "4",
-                        color: Color.cyan.opacity(0.5)
+                        color: Color.indigo.opacity(0.5)
                     )
                     
                 }.padding(.horizontal)
