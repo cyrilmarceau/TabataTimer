@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct WorkoutView: View {
     @EnvironmentObject var vm: WorkoutViewModel
     
@@ -97,8 +95,11 @@ struct WorkoutView: View {
                 
                 Spacer()
                 
-                CircularProgressIndicator(progress: $vm.progress).padding()
-                
+                CircularProgressIndicator(
+                    progress: $vm.progress,
+                    secondsToComplete: $vm.secondsToCompletion
+                ).padding()
+  
                 HStack {
                     timerControls
                 }

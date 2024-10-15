@@ -2,7 +2,7 @@
 //  CircularProgressIndicator.swift
 //  TabataTimer
 //
-//  Created by MARCEAU Cyril on 15/10/2024.
+//  Created by Cyril Marceau on 15/10/2024.
 //
 
 import SwiftUI
@@ -10,6 +10,7 @@ import SwiftUI
 struct CircularProgressIndicator: View {
     
     @Binding var progress: Float
+    @Binding var secondsToComplete: TimeInterval
     
     var body: some View {
         ZStack {
@@ -23,6 +24,18 @@ struct CircularProgressIndicator: View {
                 .foregroundColor(.orange)
                 // Start animation to 12 o'clock
                 .rotationEffect(Angle(degrees: 270))
-        }.animation(.linear(duration: 1.0), value: progress)
+            
+            Text(secondsToComplete.format).font(.system(size: 90))
+        }.animation(.linear(duration: 0.3), value: progress)
     }
+}
+
+#Preview {
+    @Previewable @State var progress: Float = 0.4
+    @Previewable @State var secondsToComplete: TimeInterval = 30
+    
+    CircularProgressIndicator(
+        progress: $progress,
+        secondsToComplete: $secondsToComplete
+    )
 }

@@ -28,22 +28,41 @@ class WorkoutViewModel: ObservableObject {
     private var timer: Timer = Timer()
     @Published var progress: Float = 0.0
     @Published var secondsToCompletion: TimeInterval = 0
+    
     @Published var state: TimerState = .cancelled {
         didSet {
             switch state {
             case .active:
                 print("didSet => active")
+                
+                progress = 1.0
+                secondsToCompletion = workout.exerciseDuration
+                
+                startTimer()
             case .resumed:
                 print("didSet => resumed")
+                startTimer()
             case .paused:
                 print("didSet => paused")
+                timer.invalidate()
+                
             case .cancelled:
                 print("didSet => cancelled")
+                timer.invalidate()
+                progress = 0.0
+                secondsToCompletion = 0.0
             }
         }
     }
     
     private func startTimer() {
-        
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            self.secondsToCompletion -= 1
+            self.progress = Float(self.secondsToCompletion) / Float(self.workout.exerciseDuration)
+            
+            if self.secondsToCompletion <= 0 {
+                self.state = .cancelled
+            }
+        }
     }
 }
