@@ -9,10 +9,10 @@ import Foundation
 
 struct WorkoutModel: Identifiable {
     let id: UUID
-    var preparationDuration: Date
-    var workoutDuration: Date
-    var restDuration: Date
+    var preparationDuration: TimeInterval
+    var exerciseDuration: TimeInterval
+    var restDuration: TimeInterval
     var round: Int
     var cycle: Int
-    var restCycle: Int
+    var restCycle: TimeInterval
 }

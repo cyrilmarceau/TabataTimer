@@ -12,6 +12,34 @@ import SwiftUI
 struct WorkoutView: View {
     @EnvironmentObject var vm: WorkoutViewModel
     
+    var timerControls: some View {
+        Group {
+            Button("Annuler", systemImage: "stop.fill", action: stopTimerState)
+                .buttonStyle(.borderedProminent)
+                .tint(Color.red.opacity(5))
+                .padding()
+            
+            switch vm.state {
+            case .active, .resumed:
+                Button("Pause", systemImage: "pause.fill", action: stopTimerState)
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color.red.opacity(5))
+                    .padding()
+            case .paused:
+                Button("Annuler", systemImage: "stop.fill", action: stopTimerState)
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color.red.opacity(5))
+                    .padding()
+            case .cancelled:
+                Button("Démarrer", systemImage: "play.fill", action: stopTimerState)
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color.green.opacity(5))
+                    .padding()
+            }
+        }
+        
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
@@ -46,10 +74,13 @@ struct WorkoutView: View {
                 
                 Spacer()
                 
-                Button("Démarrer", systemImage: "arrowtriangle.right.fill", action: {})
-                    .buttonStyle(.borderedProminent)
-                    .tint(Color.yellow.opacity(5))
+                CircularProgressIndicator(progress: $vm.progress).padding()
+                
+                HStack {
+                    timerControls
+                }
             }
+            
             .navigationTitle("Accueil")
             .navigationBarTitleDisplayMode(.large)
             .toolbarBackground(Color.white)
@@ -62,10 +93,25 @@ struct WorkoutView: View {
             }
         }
     }
+    
+    
+    
+    private func startTimerState() {
+        vm.state = .active
+    }
+    
+    private func stopTimerState() {
+        vm.state = .cancelled
+    }
+    
+    private func pauseTimerState() {
+        vm.state = .paused
+    }
 }
 
 #Preview {
-    WorkoutView().environmentObject(WorkoutViewModel())
+    WorkoutView()
+        .environmentObject(WorkoutViewModel())
 }
 
 struct WorkoutCard: View {
@@ -85,3 +131,4 @@ struct WorkoutCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
+
