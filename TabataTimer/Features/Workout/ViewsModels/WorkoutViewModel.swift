@@ -18,7 +18,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var workout: WorkoutModel = WorkoutModel(
         id: UUID(),
         preparationDuration: 20.0,
-        exerciseDuration: 30.0,
+        exerciseDuration: 10.0,
         restDuration: 15.0,
         round: 4,
         cycle: 4,
@@ -61,7 +61,14 @@ class WorkoutViewModel: ObservableObject {
             self.progress = Float(self.secondsToCompletion) / Float(self.workout.exerciseDuration)
             
             if self.secondsToCompletion <= 0 {
-                self.state = .cancelled
+                // 1. Start pause
+                // 2. Exercise
+                // 3. exercise pause
+                // 4. Decrease rouds
+                // 5. GLobal pause
+                // 6. If All rounds is equal to 0 decrease cycles
+                // 7. Rollback to .2
+                // 8. If all cycles ended save workout to storage
             }
         }
     }
