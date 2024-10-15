@@ -19,19 +19,27 @@ struct WorkoutView: View {
                 .tint(Color.red.opacity(5))
                 .padding()
             
+            Spacer()
+            
             switch vm.state {
             case .active, .resumed:
-                Button("Pause", systemImage: "pause.fill", action: stopTimerState)
+                Button("Pause", systemImage: "pause.fill", action: {
+                    vm.state = .paused
+                })
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.red.opacity(5))
+                    .tint(Color.orange.opacity(5))
                     .padding()
             case .paused:
-                Button("Annuler", systemImage: "stop.fill", action: stopTimerState)
+                Button("Reprendre", systemImage: "play.fill", action: {
+                    vm.state = .resumed
+                })
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.red.opacity(5))
+                    .tint(Color.green.opacity(5))
                     .padding()
             case .cancelled:
-                Button("Démarrer", systemImage: "play.fill", action: stopTimerState)
+                Button("Démarrer", systemImage: "play.fill", action: {
+                    vm.state = .active
+                })
                     .buttonStyle(.borderedProminent)
                     .tint(Color.green.opacity(5))
                     .padding()
