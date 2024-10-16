@@ -12,7 +12,9 @@ struct WorkoutView: View {
     
     var timerControls: some View {
         Group {
-            Button("Annuler", systemImage: "stop.fill", action: stopTimerState)
+            Button("Annuler", systemImage: "stop.fill", action: {
+                vm.cancelWorkout()
+            })
                 .buttonStyle(.borderedProminent)
                 .tint(Color.red.opacity(5))
                 .padding()
@@ -22,21 +24,21 @@ struct WorkoutView: View {
             switch vm.state {
             case .active, .resumed:
                 Button("Pause", systemImage: "pause.fill", action: {
-                    vm.state = .paused
+                    vm.pauseWorkout()
                 })
                     .buttonStyle(.borderedProminent)
                     .tint(Color.orange.opacity(5))
                     .padding()
             case .paused:
                 Button("Reprendre", systemImage: "play.fill", action: {
-                    vm.state = .resumed
+                    vm.resumeWorkout()
                 })
                     .buttonStyle(.borderedProminent)
                     .tint(Color.green.opacity(5))
                     .padding()
             case .cancelled:
                 Button("Démarrer", systemImage: "play.fill", action: {
-                    vm.state = .active
+                    vm.startWorkout()
                 })
                     .buttonStyle(.borderedProminent)
                     .tint(Color.green.opacity(5))
@@ -116,20 +118,6 @@ struct WorkoutView: View {
                 }
             }
         }
-    }
-    
-    
-    
-    private func startTimerState() {
-        vm.state = .active
-    }
-    
-    private func stopTimerState() {
-        vm.state = .cancelled
-    }
-    
-    private func pauseTimerState() {
-        vm.state = .paused
     }
 }
 
