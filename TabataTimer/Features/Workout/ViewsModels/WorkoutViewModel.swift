@@ -43,7 +43,8 @@ class WorkoutViewModel: ObservableObject {
     @Published var currentCycle: Int = 0
     
     private func startTimer() {
-        print("startTimer")
+        self.updateProgress()
+        
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             self.secondsToCompletion -= 1
             
@@ -114,6 +115,7 @@ class WorkoutViewModel: ObservableObject {
     func startWorkout() {
         currentStep = .preparation
         state = .active
+        secondsToCompletion = workout.preparationDuration
         currentRound = 1
         currentCycle = 1
         startTimer()
