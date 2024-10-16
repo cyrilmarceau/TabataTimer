@@ -17,9 +17,9 @@ class WorkoutViewModel: ObservableObject {
     
     @Published var workout: WorkoutModel = WorkoutModel(
         id: UUID(),
-        preparationDuration: 20.0,
+        preparationDuration: 5.0,
         exerciseDuration: 10.0,
-        restDuration: 15.0,
+        restDuration: 5.0,
         round: 4,
         cycle: 4,
         restCycle: 90.0
@@ -36,7 +36,7 @@ class WorkoutViewModel: ObservableObject {
                 print("didSet => active")
                 
                 progress = 1.0
-                secondsToCompletion = workout.exerciseDuration
+                secondsToCompletion = workout.preparationDuration
                 
                 startTimer()
             case .resumed:

@@ -53,13 +53,13 @@ struct WorkoutView: View {
                 HStack(spacing: 10) {
                     WorkoutCard(
                         title: "Démarrage",
-                        value: "00:10",
+                        value: vm.workout.preparationDuration.format,
                         color: Color.brown.opacity(0.5)
                     )
                     
                     WorkoutCard(
                         title: "Pause",
-                        value: "01:30",
+                        value: vm.workout.restCycle.format,
                         color: Color.brown.opacity(0.5)
                     )
                 }.padding(.horizontal)
@@ -67,13 +67,13 @@ struct WorkoutView: View {
                 HStack(spacing: 10) {
                     WorkoutCard(
                         title: "Exercice",
-                        value: "00:30",
+                        value: vm.workout.exerciseDuration.format,
                         color: Color.yellow.opacity(0.5)
                     )
                     
                     WorkoutCard(
                         title: "Pause",
-                        value: "00:15",
+                        value: vm.workout.restDuration.format,
                         color: Color.yellow.opacity(0.5)
                     )
                 }.padding(.horizontal)
@@ -81,13 +81,13 @@ struct WorkoutView: View {
                 HStack(spacing: 10) {
                     WorkoutCard(
                         title: "Rounds",
-                        value: "4",
+                        value: String(vm.workout.round),
                         color: Color.indigo.opacity(0.5)
                     )
                     
                     WorkoutCard(
                         title: "Cycles",
-                        value: "4",
+                        value: String(vm.workout.cycle),
                         color: Color.indigo.opacity(0.5)
                     )
                     
