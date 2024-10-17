@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct WorkoutView: View {
     @EnvironmentObject var vm: WorkoutViewModel
@@ -15,9 +16,9 @@ struct WorkoutView: View {
             Button("Annuler", systemImage: "stop.fill", action: {
                 vm.cancelWorkout()
             })
-                .buttonStyle(.borderedProminent)
-                .tint(Color.red.opacity(5))
-                .padding()
+            .buttonStyle(.borderedProminent)
+            .tint(Color.red.opacity(5))
+            .padding()
             
             Spacer()
             
@@ -26,23 +27,23 @@ struct WorkoutView: View {
                 Button("Pause", systemImage: "pause.fill", action: {
                     vm.pauseWorkout()
                 })
-                    .buttonStyle(.borderedProminent)
-                    .tint(Color.orange.opacity(5))
-                    .padding()
+                .buttonStyle(.borderedProminent)
+                .tint(Color.orange.opacity(5))
+                .padding()
             case .paused:
                 Button("Reprendre", systemImage: "play.fill", action: {
                     vm.resumeWorkout()
                 })
-                    .buttonStyle(.borderedProminent)
-                    .tint(Color.green.opacity(5))
-                    .padding()
+                .buttonStyle(.borderedProminent)
+                .tint(Color.green.opacity(5))
+                .padding()
             case .cancelled:
                 Button("Démarrer", systemImage: "play.fill", action: {
                     vm.startWorkout()
                 })
-                    .buttonStyle(.borderedProminent)
-                    .tint(Color.green.opacity(5))
-                    .padding()
+                .buttonStyle(.borderedProminent)
+                .tint(Color.green.opacity(5))
+                .padding()
             }
         }
         
@@ -79,21 +80,40 @@ struct WorkoutView: View {
                         color: Color.yellow.opacity(0.5)
                     )
                 }.padding(.horizontal)
-
+                
+                
                 HStack(spacing: 10) {
-                    WorkoutCard(
-                        title: "Rounds",
-                        value: String(vm.workout.round),
-                        color: Color.indigo.opacity(0.5)
-                    )
-                    
-                    WorkoutCard(
-                        title: "Cycles",
-                        value: String(vm.workout.cycle),
-                        color: Color.indigo.opacity(0.5)
-                    )
-                    
+                    if vm.state != .active {
+                        WorkoutCard(
+                            title: "Rounds",
+                            value: String(vm.workout.round),
+                            color: Color.indigo.opacity(0.5)
+                        )
+                        
+                        WorkoutCard(
+                            title: "Cycles",
+                            value: String(vm.workout.cycle),
+                            color: Color.indigo.opacity(0.5)
+                        )
+                    } else {
+                        WorkoutCard(
+                            title: "Rounds actuel",
+                            value: "\(String(vm.currentRound)) / \(vm.workout.round)" ,
+                            color: Color.red.opacity(0.5)
+                        )
+                        
+                        WorkoutCard(
+                            title: "Cycles actuel",
+                            value: "\(String(vm.currentCycle)) / \(vm.workout.cycle)",
+                            color: Color.red.opacity(0.5)
+                        )
+                    }
                 }.padding(.horizontal)
+                    .animation(.linear, value: UUID())
+                
+#if DEBUG
+                Text("\(vm.currentStep) for round n°\(vm.currentRound) in cycle n° \(vm.currentCycle)").padding(.horizontal)
+#endif
                 
                 Spacer()
                 
@@ -101,7 +121,7 @@ struct WorkoutView: View {
                     progress: $vm.progress,
                     secondsToComplete: $vm.secondsToCompletion
                 ).padding()
-  
+                
                 HStack {
                     timerControls
                 }
@@ -143,4 +163,3 @@ struct WorkoutCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
-

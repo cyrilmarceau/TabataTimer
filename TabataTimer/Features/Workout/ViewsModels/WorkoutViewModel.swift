@@ -25,12 +25,12 @@ class WorkoutViewModel: ObservableObject {
     
     @Published var workout: WorkoutModel = WorkoutModel(
         id: UUID(),
-        preparationDuration: 5.0,
-        exerciseDuration: 10.0,
-        restDuration: 5.0,
-        round: 4,
+        preparationDuration: 2.0,
+        exerciseDuration: 5.0,
+        restDuration: 3.0,
+        round: 5,
         cycle: 4,
-        restCycle: 90.0
+        restCycle: 10.0
     )
     
     private var timer: Timer = Timer()
@@ -39,8 +39,9 @@ class WorkoutViewModel: ObservableObject {
     @Published var secondsToCompletion: TimeInterval = 0
     @Published var state: TimerState = .cancelled
     @Published var currentStep: WorkoutStep = .preparation
-    @Published var currentRound: Int = 0
-    @Published var currentCycle: Int = 0
+    @Published var currentRound: Int = 1
+    @Published var currentCycle: Int = 1
+    @Published var isRunning: Bool = false
     
     private func startTimer() {
         self.updateProgress()
@@ -50,12 +51,8 @@ class WorkoutViewModel: ObservableObject {
             
             self.updateProgress()
             
-            
-            
             if self.secondsToCompletion == 0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.goToNextStep()
-                }
+                self.goToNextStep()
             }
         }
     }
@@ -86,21 +83,15 @@ class WorkoutViewModel: ObservableObject {
                 secondsToCompletion = workout.restDuration
                 currentRound += 1
             } else {
-                if currentCycle < workout.cycle {
-                    currentStep = .restCycle
-                    secondsToCompletion = workout.restCycle
-                    currentCycle += 1
-                    currentRound = 1
-                } else {
-                    completeWorkout()
-                }
+                currentStep = .restCycle
+                secondsToCompletion = workout.restCycle
+                
             }
         case .rest:
             currentStep = .exercise
             secondsToCompletion = workout.exerciseDuration
         case .restCycle:
-            currentStep = .exercise
-            secondsToCompletion = workout.exerciseDuration
+            print("goToNextStep - restCycle")
         case .completed:
             break;
         }
@@ -120,8 +111,6 @@ class WorkoutViewModel: ObservableObject {
         currentStep = .preparation
         state = .active
         secondsToCompletion = workout.preparationDuration
-        currentRound = 1
-        currentCycle = 1
         startTimer()
     }
     
