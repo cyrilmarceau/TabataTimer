@@ -50,8 +50,12 @@ class WorkoutViewModel: ObservableObject {
             
             self.updateProgress()
             
-            if self.secondsToCompletion <= 0 {
-                self.goToNextStep()
+            
+            
+            if self.secondsToCompletion == 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.goToNextStep()
+                }
             }
         }
     }
