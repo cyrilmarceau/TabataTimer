@@ -25,9 +25,9 @@ class WorkoutViewModel: ObservableObject {
     
     @Published var workout: WorkoutModel = WorkoutModel(
         id: UUID(),
-        preparationDuration: 2.0,
-        exerciseDuration: 5.0,
-        restDuration: 3.0,
+        preparationDuration: 10.0,
+        exerciseDuration: 20.0,
+        restDuration: 15.0,
         round: 5,
         cycle: 4,
         restCycle: 10.0
@@ -35,7 +35,7 @@ class WorkoutViewModel: ObservableObject {
     
     private var timer: Timer = Timer()
     
-    @Published var progress: Float = 0.0
+    @Published var progress: Float = 1.0
     @Published var secondsToCompletion: TimeInterval = 0
     @Published var state: TimerState = .cancelled
     @Published var currentStep: WorkoutStep = .preparation
@@ -44,14 +44,14 @@ class WorkoutViewModel: ObservableObject {
     @Published var isRunning: Bool = false
     
     private func startTimer() {
-        self.updateProgress()
+
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             self.secondsToCompletion -= 1
             
             self.updateProgress()
             
-            if self.secondsToCompletion == 0 {
+            if self.secondsToCompletion == -1 {
                 self.goToNextStep()
             }
         }
@@ -60,6 +60,7 @@ class WorkoutViewModel: ObservableObject {
     private func updateProgress() {
         switch currentStep {
         case .preparation:
+            print("update progress .preparation \(Float(secondsToCompletion) / Float(workout.preparationDuration))")
             progress = Float(secondsToCompletion) / Float(workout.preparationDuration)
         case .exercise:
             progress = Float(secondsToCompletion) / Float(workout.exerciseDuration)
@@ -116,7 +117,7 @@ class WorkoutViewModel: ObservableObject {
         currentStep = .completed
         state = .cancelled
         timer.invalidate()
-        progress = 0
+        progress = 1.0
         secondsToCompletion = 0
     }
     
@@ -141,9 +142,9 @@ class WorkoutViewModel: ObservableObject {
         state = .cancelled
         timer.invalidate()
         currentStep = .preparation
-        currentRound = 0
-        currentCycle = 0
-        progress = 0
+        currentRound = 1
+        currentCycle = 1
+        progress = 1.0
         secondsToCompletion = 0
     }
 }
