@@ -97,13 +97,13 @@ struct WorkoutView: View {
                         )
                     } else {
                         WorkoutCard(
-                            title: "Rounds actuel",
+                            title: "Rounds",
                             value: "\(String(vm.currentRound)) / \(vm.workout.round)" ,
                             color: Color.red.opacity(0.5)
                         )
                         
                         WorkoutCard(
-                            title: "Cycles actuel",
+                            title: "Cycles",
                             value: "\(String(vm.currentCycle)) / \(vm.workout.cycle)",
                             color: Color.red.opacity(0.5)
                         )

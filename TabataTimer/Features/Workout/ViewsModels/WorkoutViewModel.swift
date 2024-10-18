@@ -81,17 +81,30 @@ class WorkoutViewModel: ObservableObject {
             if currentRound < workout.round {
                 currentStep = .rest
                 secondsToCompletion = workout.restDuration
-                currentRound += 1
             } else {
-                currentStep = .restCycle
-                secondsToCompletion = workout.restCycle
-                
+                if currentCycle < workout.cycle {
+                    currentStep = .restCycle
+                    secondsToCompletion = workout.restCycle
+                } else {
+                    completeWorkout()
+                }
+               
             }
         case .rest:
             currentStep = .exercise
             secondsToCompletion = workout.exerciseDuration
+            
+            if currentRound < workout.round {
+                currentRound += 1
+            }
         case .restCycle:
-            print("goToNextStep - restCycle")
+            currentStep = .exercise
+            secondsToCompletion = workout.exerciseDuration
+            if currentCycle < workout.cycle {
+                currentCycle += 1
+                currentRound = 1
+            }
+            
         case .completed:
             break;
         }
