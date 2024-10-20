@@ -110,10 +110,7 @@ struct WorkoutView: View {
                     }
                 }.padding(.horizontal)
                     .animation(.linear, value: UUID())
-                
-#if DEBUG
-                Text("\(vm.currentStep) for round n°\(vm.currentRound) in cycle n° \(vm.currentCycle)").padding(.horizontal)
-#endif
+    
                 
                 Spacer()
                 
