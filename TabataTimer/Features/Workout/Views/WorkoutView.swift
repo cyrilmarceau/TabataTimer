@@ -10,6 +10,7 @@ import UIKit
 
 struct WorkoutView: View {
     @EnvironmentObject var vm: WorkoutViewModel
+    @State var isPresented: Bool = true
     
     var timerControls: some View {
         Group {
@@ -110,7 +111,7 @@ struct WorkoutView: View {
                     }
                 }.padding(.horizontal)
                     .animation(.linear, value: UUID())
-    
+                
                 
                 Spacer()
                 
@@ -123,6 +124,39 @@ struct WorkoutView: View {
                     timerControls
                 }
             }
+            .sheet(isPresented: $isPresented) {
+                
+                VStack {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.white, .green)
+                        .font(.system(size: 30))
+                        .padding(.bottom, 10)
+
+                    Text("Circuit terminé")
+                        .font(.title)
+                    Text("Vous pourrez retrouver ce HIT dans l'historique")
+                        .font(.subheadline)
+                        
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            isPresented.toggle()
+                        }) {
+                            Text("Fermer")
+                                .frame(width: 150, height: 30)
+                                .buttonStyle(.borderedProminent)
+                        }.buttonStyle(.borderedProminent)
+                            .tint(.black)
+                        Spacer()
+                    }
+                }
+                .padding(.top)
+                .presentationDetents([.height(230)])
+                .interactiveDismissDisabled()
+            }
+            
             
             .navigationTitle("Accueil")
             .navigationBarTitleDisplayMode(.large)
@@ -134,6 +168,7 @@ struct WorkoutView: View {
                     }
                 }
             }
+            
         }
     }
 }

@@ -25,11 +25,11 @@ class WorkoutViewModel: ObservableObject {
     
     @Published var workout: WorkoutModel = WorkoutModel(
         id: UUID(),
-        preparationDuration: 10.0,
-        exerciseDuration: 20.0,
-        restDuration: 15.0,
-        round: 5,
-        cycle: 4,
+        preparationDuration: 3,
+        exerciseDuration: 6,
+        restDuration: 10,
+        round: 1,
+        cycle: 1,
         restCycle: 10.0
     )
     
@@ -44,7 +44,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var isRunning: Bool = false
     
     private func startTimer() {
-
+        
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             self.secondsToCompletion -= 1
@@ -60,7 +60,6 @@ class WorkoutViewModel: ObservableObject {
     private func updateProgress() {
         switch currentStep {
         case .preparation:
-            print("update progress .preparation \(Float(secondsToCompletion) / Float(workout.preparationDuration))")
             progress = Float(secondsToCompletion) / Float(workout.preparationDuration)
         case .exercise:
             progress = Float(secondsToCompletion) / Float(workout.exerciseDuration)
@@ -89,7 +88,7 @@ class WorkoutViewModel: ObservableObject {
                 } else {
                     completeWorkout()
                 }
-               
+                
             }
         case .rest:
             currentStep = .exercise
