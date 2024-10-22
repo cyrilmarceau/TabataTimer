@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WorkoutModel: Identifiable {
+struct WorkoutModel: Identifiable, Decodable, Encodable {
     let id: UUID
     var preparationDuration: TimeInterval
     var exerciseDuration: TimeInterval

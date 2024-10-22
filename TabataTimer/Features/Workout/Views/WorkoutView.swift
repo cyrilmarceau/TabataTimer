@@ -10,7 +10,7 @@ import UIKit
 
 struct WorkoutView: View {
     @EnvironmentObject var vm: WorkoutViewModel
-    @State var isPresented: Bool = true
+    
     
     var timerControls: some View {
         Group {
@@ -124,8 +124,7 @@ struct WorkoutView: View {
                     timerControls
                 }
             }
-            .sheet(isPresented: $isPresented) {
-                
+            .sheet(isPresented: $vm.isSheetPresented) {
                 VStack {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.white, .green)
@@ -136,13 +135,14 @@ struct WorkoutView: View {
                         .font(.title)
                     Text("Vous pourrez retrouver ce HIT dans l'historique")
                         .font(.subheadline)
+                        .foregroundColor(.black.opacity(0.7))
                         
                     Spacer()
                     
                     HStack {
                         Spacer()
                         Button(action: {
-                            isPresented.toggle()
+                            vm.closeSheet()
                         }) {
                             Text("Fermer")
                                 .frame(width: 150, height: 30)
@@ -155,6 +155,7 @@ struct WorkoutView: View {
                 .padding(.top)
                 .presentationDetents([.height(230)])
                 .interactiveDismissDisabled()
+                
             }
             
             

@@ -26,7 +26,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var workout: WorkoutModel = WorkoutModel(
         id: UUID(),
         preparationDuration: 3,
-        exerciseDuration: 6,
+        exerciseDuration: 3,
         restDuration: 10,
         round: 1,
         cycle: 1,
@@ -42,6 +42,7 @@ class WorkoutViewModel: ObservableObject {
     @Published var currentRound: Int = 1
     @Published var currentCycle: Int = 1
     @Published var isRunning: Bool = false
+    @Published var isSheetPresented: Bool = false
     
     private func startTimer() {
         
@@ -118,6 +119,7 @@ class WorkoutViewModel: ObservableObject {
         timer.invalidate()
         progress = 1.0
         secondsToCompletion = 0
+        isSheetPresented = true
     }
     
     func startWorkout() {
@@ -145,5 +147,38 @@ class WorkoutViewModel: ObservableObject {
         currentCycle = 1
         progress = 1.0
         secondsToCompletion = 0
+    }
+    
+    func closeSheet(){
+        addWorkoutInStorage()
+        isSheetPresented = false
+    }
+    
+   
+    
+    
+    private func addWorkoutInStorage() {
+        print("Adding new workout to storage")
+            let workoutKey = "workouts"
+            
+            var currentWorkouts: [WorkoutModel] = []
+            if let savedData = UserDefaults.standard.data(forKey: workoutKey) {
+                do {
+                    currentWorkouts = try JSONDecoder().decode([WorkoutModel].self, from: savedData)
+                } catch {
+                    print("Error loading existing workouts: \(error)")
+                }
+            }
+            
+
+            currentWorkouts.append(workout)
+
+            do {
+                let encodedData = try JSONEncoder().encode(currentWorkouts)
+                UserDefaults.standard.set(encodedData, forKey: workoutKey)
+                print("Successfully added new workout")
+            } catch {
+                print("Error saving workout: \(error)")
+            }
     }
 }
