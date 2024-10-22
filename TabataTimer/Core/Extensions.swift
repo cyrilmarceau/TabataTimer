@@ -28,3 +28,17 @@ extension TimeInterval {
             }
         }
 }
+
+
+extension WorkoutButton {
+    static func makeIt(for state: TimerState, viewModel: WorkoutViewModel) -> WorkoutButton {
+        switch state {
+        case .active, .resumed:
+            return WorkoutButton(title: "Pause", systemImage: "pause.fill", action: viewModel.pauseWorkout, color: .orange)
+        case .paused:
+            return WorkoutButton(title: "Reprendre", systemImage: "play.fill", action: viewModel.resumeWorkout, color: .green)
+        case .cancelled:
+            return WorkoutButton(title: "Démarrer", systemImage: "play.fill", action: viewModel.startWorkout, color: .green)
+        }
+    }
+}

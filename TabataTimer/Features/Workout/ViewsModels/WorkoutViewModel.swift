@@ -7,21 +7,23 @@
 
 import Foundation
 
+enum TimerState {
+    case active
+    case resumed
+    case paused
+    case cancelled
+}
+
+enum WorkoutStep {
+    case preparation
+    case exercise
+    case rest
+    case restCycle
+    case completed
+}
+
+
 class WorkoutViewModel: ObservableObject {
-    enum TimerState {
-        case active
-        case resumed
-        case paused
-        case cancelled
-    }
-    
-    enum WorkoutStep {
-        case preparation
-        case exercise
-        case rest
-        case restCycle
-        case completed
-    }
     
     @Published var workout: WorkoutModel = WorkoutModel(
         id: UUID(),
@@ -154,31 +156,31 @@ class WorkoutViewModel: ObservableObject {
         isSheetPresented = false
     }
     
-   
+    
     
     
     private func addWorkoutInStorage() {
         print("Adding new workout to storage")
-            let workoutKey = "workouts"
-            
-            var currentWorkouts: [WorkoutModel] = []
-            if let savedData = UserDefaults.standard.data(forKey: workoutKey) {
-                do {
-                    currentWorkouts = try JSONDecoder().decode([WorkoutModel].self, from: savedData)
-                } catch {
-                    print("Error loading existing workouts: \(error)")
-                }
-            }
-            
-
-            currentWorkouts.append(workout)
-
+        let workoutKey = "workouts"
+        
+        var currentWorkouts: [WorkoutModel] = []
+        if let savedData = UserDefaults.standard.data(forKey: workoutKey) {
             do {
-                let encodedData = try JSONEncoder().encode(currentWorkouts)
-                UserDefaults.standard.set(encodedData, forKey: workoutKey)
-                print("Successfully added new workout")
+                currentWorkouts = try JSONDecoder().decode([WorkoutModel].self, from: savedData)
             } catch {
-                print("Error saving workout: \(error)")
+                print("Error loading existing workouts: \(error)")
             }
+        }
+        
+        
+        currentWorkouts.append(workout)
+        
+        do {
+            let encodedData = try JSONEncoder().encode(currentWorkouts)
+            UserDefaults.standard.set(encodedData, forKey: workoutKey)
+            print("Successfully added new workout")
+        } catch {
+            print("Error saving workout: \(error)")
+        }
     }
 }

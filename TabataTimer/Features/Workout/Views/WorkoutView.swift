@@ -12,152 +12,25 @@ struct WorkoutView: View {
     @EnvironmentObject var vm: WorkoutViewModel
     
     
-    var timerControls: some View {
-        Group {
-            Button("Annuler", systemImage: "stop.fill", action: {
-                vm.cancelWorkout()
-            })
-            .buttonStyle(.borderedProminent)
-            .tint(Color.red.opacity(5))
-            .padding()
-            
-            Spacer()
-            
-            switch vm.state {
-            case .active, .resumed:
-                Button("Pause", systemImage: "pause.fill", action: {
-                    vm.pauseWorkout()
-                })
-                .buttonStyle(.borderedProminent)
-                .tint(Color.orange.opacity(5))
-                .padding()
-            case .paused:
-                Button("Reprendre", systemImage: "play.fill", action: {
-                    vm.resumeWorkout()
-                })
-                .buttonStyle(.borderedProminent)
-                .tint(Color.green.opacity(5))
-                .padding()
-            case .cancelled:
-                Button("Démarrer", systemImage: "play.fill", action: {
-                    vm.startWorkout()
-                })
-                .buttonStyle(.borderedProminent)
-                .tint(Color.green.opacity(5))
-                .padding()
-            }
-        }
-        
-    }
-    
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
                 
-                HStack(spacing: 10) {
-                    WorkoutCard(
-                        title: "Démarrage",
-                        value: vm.workout.preparationDuration.format,
-                        color: Color.brown.opacity(0.5)
-                    )
-                    
-                    WorkoutCard(
-                        title: "Pause",
-                        value: vm.workout.restCycle.format,
-                        color: Color.brown.opacity(0.5)
-                    )
-                }.padding(.horizontal)
-                
-                HStack(spacing: 10) {
-                    WorkoutCard(
-                        title: "Exercice",
-                        value: vm.workout.exerciseDuration.format,
-                        color: Color.yellow.opacity(0.5)
-                    )
-                    
-                    WorkoutCard(
-                        title: "Pause",
-                        value: vm.workout.restDuration.format,
-                        color: Color.yellow.opacity(0.5)
-                    )
-                }.padding(.horizontal)
-                
-                
-                HStack(spacing: 10) {
-                    if vm.state != .active {
-                        WorkoutCard(
-                            title: "Rounds",
-                            value: String(vm.workout.round),
-                            color: Color.indigo.opacity(0.5)
-                        )
-                        
-                        WorkoutCard(
-                            title: "Cycles",
-                            value: String(vm.workout.cycle),
-                            color: Color.indigo.opacity(0.5)
-                        )
-                    } else {
-                        WorkoutCard(
-                            title: "Rounds",
-                            value: "\(String(vm.currentRound)) / \(vm.workout.round)" ,
-                            color: Color.red.opacity(0.5)
-                        )
-                        
-                        WorkoutCard(
-                            title: "Cycles",
-                            value: "\(String(vm.currentCycle)) / \(vm.workout.cycle)",
-                            color: Color.red.opacity(0.5)
-                        )
-                    }
-                }.padding(.horizontal)
+                WorkoutMetricsGridView(vm: vm)
+                    .padding(.horizontal)
                     .animation(.linear, value: UUID())
-                
                 
                 Spacer()
                 
-                CircularProgressIndicator(
-                    progress: $vm.progress,
-                    secondsToComplete: $vm.secondsToCompletion
-                ).padding()
+                CircularProgressIndicatorView(progress: $vm.progress,secondsToComplete: $vm.secondsToCompletion)
+                    .padding()
                 
-                HStack {
-                    timerControls
-                }
+                WorkoutControlsView(vm: vm)
+                
             }
             .sheet(isPresented: $vm.isSheetPresented) {
-                VStack {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(.white, .green)
-                        .font(.system(size: 30))
-                        .padding(.bottom, 10)
-
-                    Text("Circuit terminé")
-                        .font(.title)
-                    Text("Vous pourrez retrouver ce HIT dans l'historique")
-                        .font(.subheadline)
-                        .foregroundColor(.black.opacity(0.7))
-                        
-                    Spacer()
-                    
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            vm.closeSheet()
-                        }) {
-                            Text("Fermer")
-                                .frame(width: 150, height: 30)
-                                .buttonStyle(.borderedProminent)
-                        }.buttonStyle(.borderedProminent)
-                            .tint(.black)
-                        Spacer()
-                    }
-                }
-                .padding(.top)
-                .presentationDetents([.height(230)])
-                .interactiveDismissDisabled()
-                
+                WorkoutCompletionSheetView(onClose: vm.closeSheet)
             }
-            
             
             .navigationTitle("Accueil")
             .navigationBarTitleDisplayMode(.large)
@@ -177,22 +50,4 @@ struct WorkoutView: View {
 #Preview {
     WorkoutView()
         .environmentObject(WorkoutViewModel())
-}
-
-struct WorkoutCard: View {
-    
-    let title, value: String
-    let color: Color
-    
-    
-    var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            Text(value)
-        }
-        .padding()
-        .background(color)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-    }
 }

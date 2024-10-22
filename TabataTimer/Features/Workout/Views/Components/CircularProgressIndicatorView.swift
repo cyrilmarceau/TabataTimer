@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CircularProgressIndicator: View {
+struct CircularProgressIndicatorView: View {
     
     @Binding var progress: Float
     @Binding var secondsToComplete: TimeInterval
@@ -22,7 +22,7 @@ struct CircularProgressIndicator: View {
                 .trim(from: 0.0, to: CGFloat(min(progress, 1.0)))
                 .stroke(style: StrokeStyle(lineWidth: 8.0, lineCap: .round, lineJoin: .round))
                 .foregroundColor(.orange)
-                // Start animation to 12 o'clock
+            // Start animation to 12 o'clock
                 .rotationEffect(Angle(degrees: 270))
             
             Text(secondsToComplete.format).font(.system(size: 90))
@@ -34,7 +34,7 @@ struct CircularProgressIndicator: View {
     @Previewable @State var progress: Float = 0.4
     @Previewable @State var secondsToComplete: TimeInterval = 30
     
-    CircularProgressIndicator(
+    CircularProgressIndicatorView(
         progress: $progress,
         secondsToComplete: $secondsToComplete
     )
