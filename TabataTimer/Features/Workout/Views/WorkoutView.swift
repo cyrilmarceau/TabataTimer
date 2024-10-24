@@ -14,8 +14,10 @@ struct WorkoutView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 10) {
+            VStack{
                 
+                WorkoutCurrentDate()
+
                 WorkoutMetricsGridView(vm: vm)
                     .padding(.horizontal)
                     .animation(.linear, value: UUID())
@@ -33,8 +35,7 @@ struct WorkoutView: View {
             }
             
             .navigationTitle("Accueil")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbarBackground(Color.white)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {}) {

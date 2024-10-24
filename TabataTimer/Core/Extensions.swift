@@ -42,3 +42,29 @@ extension WorkoutButton {
         }
     }
 }
+
+
+extension Date {
+    func formattedDate() -> String {
+        return self.formatted(
+            Date.FormatStyle()
+                .locale(.current)
+                .year().month().day()
+        )
+    }
+    
+    func formattedTime() -> String {
+        return self.formatted(
+            Date.FormatStyle()
+                .locale(.current)
+                .hour().minute()
+        )
+    }
+    
+    func dayOfWeek() -> String {
+        let formatter = DateFormatter()
+                formatter.locale = Locale.current // Utiliser la localisation actuelle
+                formatter.dateFormat = "EEEE" // Format pour le jour de la semaine (ex : "Lundi")
+                return formatter.string(from: self)
+    }
+}
