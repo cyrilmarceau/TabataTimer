@@ -12,7 +12,15 @@ struct WorkoutControlsView: View {
     
     var body: some View {
         HStack {
-            WorkoutButton(title: "Annuler", systemImage: "stop.fill", action: vm.cancelWorkout, color: .red)
+            WorkoutButton(
+                title: "Annuler",
+                systemImage: "stop.fill",
+                action: vm.cancelWorkout,
+                color: .red
+            ).disabled(
+                vm.currentStep == .preparation &&
+                vm.secondsToCompletion <= 0
+            )
             
             Spacer()
             
