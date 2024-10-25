@@ -63,8 +63,8 @@ extension Date {
     
     func dayOfWeek() -> String {
         let formatter = DateFormatter()
-                formatter.locale = Locale.current // Utiliser la localisation actuelle
-                formatter.dateFormat = "EEEE" // Format pour le jour de la semaine (ex : "Lundi")
+                formatter.locale = Locale.current
+                formatter.dateFormat = "EEEE"
                 return formatter.string(from: self)
     }
 }

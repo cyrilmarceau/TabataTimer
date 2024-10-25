@@ -10,7 +10,7 @@ import UIKit
 
 struct WorkoutView: View {
     @EnvironmentObject var vm: WorkoutViewModel
-    
+    @State private var isShowingCreateWorkoutForm: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -33,12 +33,17 @@ struct WorkoutView: View {
             .sheet(isPresented: $vm.isSheetPresented) {
                 WorkoutCompletionSheetView(onClose: vm.closeSheet)
             }
+            .sheet(isPresented: $isShowingCreateWorkoutForm) {
+                WorkoutFormView().environmentObject(WorkoutFormViewModel())
+            }
             
             .navigationTitle("Accueil")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {}) {
+                    Button(action: {
+                        isShowingCreateWorkoutForm.toggle()
+                    }) {
                         Label("", systemImage: "slider.vertical.3")
                     }
                 }
