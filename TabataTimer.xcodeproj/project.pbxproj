@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F1DD3E672CCE9AF3006B4CEF /* DurationPicker in Frameworks */ = {isa = PBXBuildFile; productRef = F1DD3E662CCE9AF3006B4CEF /* DurationPicker */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		F169EA5C2CB7BC3C00278D1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1DD3E672CCE9AF3006B4CEF /* DurationPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = TabataTimer;
 			packageProductDependencies = (
+				F1DD3E662CCE9AF3006B4CEF /* DurationPicker */,
 			);
 			productName = TabataTimer;
 			productReference = F169EA4B2CB7BC3B00278D1D /* TabataTimer.app */;
@@ -195,6 +201,10 @@
 			);
 			mainGroup = F169EA422CB7BC3B00278D1D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F1DD3E642CCE9AC4006B4CEF /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				F1DD3E652CCE9AF3006B4CEF /* XCRemoteSwiftPackageReference "DurationPicker" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F169EA4C2CB7BC3B00278D1D /* Products */;
 			projectDirPath = "";
@@ -556,6 +566,33 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F1DD3E642CCE9AC4006B4CEF /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.57.0;
+			};
+		};
+		F1DD3E652CCE9AF3006B4CEF /* XCRemoteSwiftPackageReference "DurationPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mac-gallagher/DurationPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F1DD3E662CCE9AF3006B4CEF /* DurationPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1DD3E652CCE9AF3006B4CEF /* XCRemoteSwiftPackageReference "DurationPicker" */;
+			productName = DurationPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F169EA432CB7BC3B00278D1D /* Project object */;
 }

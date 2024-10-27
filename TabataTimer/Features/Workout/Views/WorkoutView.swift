@@ -34,7 +34,9 @@ struct WorkoutView: View {
                 WorkoutCompletionSheetView(onClose: vm.closeSheet)
             }
             .sheet(isPresented: $isShowingCreateWorkoutForm) {
-                WorkoutFormView().environmentObject(WorkoutFormViewModel())
+                NavigationStack {
+                    WorkoutFormView().environmentObject(WorkoutFormViewModel())
+                }
             }
             
             .navigationTitle("Accueil")
