@@ -10,7 +10,7 @@ import UIKit
 
 struct WorkoutView: View {
     @EnvironmentObject var vm: WorkoutViewModel
-    @State private var isShowingCreateWorkoutForm: Bool = false
+    @State private var isShowingCreateWorkoutForm: Bool = true
     
     var body: some View {
         NavigationStack {

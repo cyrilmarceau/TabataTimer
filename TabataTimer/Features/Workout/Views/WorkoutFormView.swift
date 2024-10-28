@@ -10,60 +10,53 @@ import SwiftUI
 struct WorkoutFormView: View {
     
     @Environment(\.dismiss) var dismiss
-    
-    @State private var preparation: Int = 0
-    @State private var duration: Int = 0
-    
-    @State private var rest: Int = 0
-    @State private var rounds: Int = 0
-    @State private var cycles: Int = 0
-    @State private var restCycle: Int = 0
-    
+    @EnvironmentObject var vm: WorkoutFormViewModel
     
     var body: some View {
-        Form {
-            // Section for preparation, exercise, and rest durations
-            Section(header: Text("Durées")) {
-                
-                Picker("Préparation", selection: $preparation) {
-                    ForEach(1..<100) { i in
-                        Text("\(i) secs")
+        VStack {
+            Form {
+                // Section for preparation, exercise, and rest durations
+                Section(header: Text("Durées")) {
+                    
+                    Picker("Préparation", selection: $vm.preparationDuration) {
+                        ForEach(0..<100) { i in
+                            Text("\(i) secs")
+                        }
                     }
+                    
+                    Picker("Durée", selection: $vm.exerciseDuration) {
+                        ForEach(0..<100) { i in
+                            Text("\(i) secs")
+                        }
+                    }
+                    
+                    Picker("Pause", selection: $vm.restDuration) {
+                        ForEach(0..<100) { i in
+                            Text("\(i) secs")
+                        }
+                    }
+                    
                 }
                 
-                Picker("Durée", selection: $duration) {
-                    ForEach(1..<100) { i in
-                        Text("\(i) secs")
+                // Section for rounds and cycles
+                Section(header: Text("Configuration du HIT")) {
+                    Picker("Rounds", selection: $vm.round) {
+                        ForEach(0..<100) { i in
+                            Text("\(i)")
+                        }
+                    }
+                    Picker("Cycles", selection: $vm.cycle) {
+                        ForEach(0..<100) { i in
+                            Text("\(i)")
+                        }
                     }
                 }
-                
-                Picker("Pause", selection: $rest) {
-                    ForEach(1..<100) { i in
-                        Text("\(i) secs")
-                    }
-                }
-                
-            }
-            
-            // Section for rounds and cycles
-            Section(header: Text("Configuration du HIT")) {
-                Picker("Rounds", selection: $rounds) {
-                    ForEach(1..<100) { i in
-                        Text("\(i)")
-                    }
-                }
-                Picker("Cycles", selection: $cycles) {
-                    ForEach(1..<100) { i in
-                        Text("\(i)")
-                    }
-                }
-            }
-            // Section for rest after cycle
-            Section(header: Text("Cycle")) {
-                
-                Picker("Cycles", selection: $cycles) {
-                    ForEach(1..<100) { i in
-                        Text("\(i) secs")
+                // Section for rest after cycle
+                Section(header: Text("Cycle")) {
+                    Picker("Cycles", selection: $vm.restCycle) {
+                        ForEach(0..<100) { i in
+                            Text("\(i) secs")
+                        }
                     }
                 }
             }
@@ -71,12 +64,23 @@ struct WorkoutFormView: View {
         .navigationTitle("Intervales")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("", systemImage: "xmark", action: {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(action: {
                     dismiss()
-                })
+                }) {
+                    Image(systemName: "xmark")
+                }
             }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: {
+                    vm.saveWorkoutSettings()
+                }) {
+                    Image(systemName: "pencil")
+                }
+            }
+            
         })
+        
     }
-    
 }
