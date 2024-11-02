@@ -10,15 +10,17 @@ import SwiftUI
 
 struct WorkoutCurrentDate: View {
     
+    @StateObject private var vm = WorkoutCurrentDateViewModel()
+    
     var body: some View {
         HStack {
             Image(systemName: "clock").bold()
             
-            Text("\(Date.now.dayOfWeek()) \(Date.now.formattedDate())").bold()
+            Text(vm.currentDate).bold()
             
             Spacer()
             
-            Text(Date.now.formattedTime()).bold()
+            Text(vm.currentTime).bold()
             
         }.padding()
     }
